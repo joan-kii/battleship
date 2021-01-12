@@ -1,5 +1,15 @@
 import shipFactory from '../factories/shipFactory';
 
+// Parameter validity
+
+test('throw error if the parameter is not valid', () => {
+  expect(() => shipFactory('oops')).toThrow('pass a string with one of the ship names with the first letter capitalized: Destructor, Crucero, Submarino, Acorazado or Portaviones');
+});
+
+test('throw error if the parameter is not a string', () => {
+  expect(() => shipFactory(123)).toThrow('pass a string with one of the ship names with the first letter capitalized: Destructor, Crucero, Submarino, Acorazado or Portaviones');
+});
+
 // Ship name and length
 
 test('pass a ship name (Destructor) and returns an object with the name and the length', () => {
