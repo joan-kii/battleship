@@ -5,7 +5,7 @@ const shipFactory = (name) => {
     const shipName = name;
     const positionsHited = [];
     const hit = (number) => {
-      positionsHited[number] = number;
+      positionsHited.push(number);
     };
     const isSunk = () => {
       return shipLength === positionsHited.length ? true : false;
