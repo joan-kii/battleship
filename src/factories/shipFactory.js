@@ -1,14 +1,15 @@
 const shipFactory = (name) => {
   
-  const regex = /Destructor|Crucero|Submarino|Acorazado|Portaviones/g;
+  const regex = /Destructor|Crucero|Submarino|Acorazado|Portaviones/;
   if (regex.test(name)) {
     const shipName = name;
+    const shipPosition = [];
     const positionsHited = [];
     const hit = (number) => {
       positionsHited.push(number);
     };
     const isSunk = () => {
-      return shipLength === positionsHited.length ? true : false;
+      return shipLength === positionsHited.length;
     };
     let shipLength = 0;
     switch (shipName) {
@@ -26,10 +27,10 @@ const shipFactory = (name) => {
         shipLength = 5;
         break;
       default:
-        shipLength = 2;
+        null;
         break;
     }
-    return { shipName, shipLength, hit, isSunk };
+    return { shipName, shipLength, shipPosition, hit, isSunk };
   }
   throw new Error('pass a string with one of the ship names with the first letter capitalized: Destructor, Crucero, Submarino, Acorazado or Portaviones');
 };
