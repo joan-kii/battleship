@@ -1,36 +1,36 @@
 import gameboardFactory from '../factories/gameboardFactory';
 const shipsArrayExpected = [
   {
-   "hit": hit,
-   "isSunk": Function,
+   "hit": expect.any(expect.any(Function)),
+   "isSunk": expect.any(expect.any(Function)),
    "shipLength": 2,
    "shipName": "Destructor",
    "shipPosition": []
   },
   {
-  "hit": Function,
-  "isSunk": Function,
+  "hit": expect.any(Function),
+  "isSunk": expect.any(Function),
   "shipLength": 3,
   "shipName": "Crucero",
   "shipPosition": []
   },
   {
-  "hit": Function,
-  "isSunk": Function,
+  "hit": expect.any(Function),
+  "isSunk": expect.any(Function),
   "shipLength": 3,
   "shipName": "Submarino",
   "shipPosition": []
   },
   {
-  "hit": Function,
-  "isSunk": Function,
+  "hit": expect.any(Function) ,
+  "isSunk": expect.any(Function),
   "shipLength": 4,
   "shipName": "Acorazado",
   "shipPosition": []
   },
   {
-  "hit": Function,
-  "isSunk": Function,
+  "hit": expect.any(Function),
+  "isSunk": expect.any(Function),
   "shipLength": 5,
   "shipName": "Portaviones",
   "shipPosition": []
@@ -38,5 +38,6 @@ const shipsArrayExpected = [
 ];
 
 test.only('gameboardFactory return a shipsArray', () => {
-  expect(gameboardFactory()).toEqual(expect.arrayContaining(shipsArrayExpected));
+  const gameboard = gameboardFactory();
+  expect(gameboard).toEqual(expect.arrayContaining(shipsArrayExpected));
 });

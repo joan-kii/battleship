@@ -27,13 +27,12 @@ const shipFactory = (name) => {
         shipLength = 5;
         break;
       default:
-        null;
+        shipLength = 2;
         break;
     }
     return { shipName, shipLength, shipPosition, hit, isSunk };
   }
   throw new Error('pass a string with one of the ship names with the first letter capitalized: Destructor, Crucero, Submarino, Acorazado or Portaviones');
 };
-
 
 export default shipFactory;
