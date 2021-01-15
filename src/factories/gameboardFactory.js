@@ -9,18 +9,29 @@ const gameboardFactory = () => {
   const carrier = shipFactory('Portaviones');
 
   const shipsArray = [destroyer, cruiser, submarine, battleship, carrier];
-
+  const missedShots = [];
+  
   const placeShip = (ship, coords, isRotated) => {
-    for(let i = 0; i < ship.length; i++) {
+    for(let i = 0; i < ship.shipLength; i++) {
       if (isRotated) {
-        ship.shipPosition.push(coords[0] + i);
+        ship.shipPosition.push(coords + i);
       } else {
-        ship.shipPosition.push(coords[1] + i);
+        ship.shipPosition.push(coords + (i * 10));
       }
     }
+    return ship.shipPosition;
   };
 
-  return shipsArray;
+  const receiveAttack = (shotPlace) => {
+    for(let ship of shipsArray) {
+      if(ship.shipPosition.includes(shotPlace)) {
+        ship.hit(shotPlace);
+      }
+    }
+    return missedShots.push(shotPlace);
+  };
+
+  return { shipsArray,  missedShots, placeShip, receiveAttack };
 };
 
 export default gameboardFactory;

@@ -37,7 +37,20 @@ const shipsArrayExpected = [
   }
 ];
 
-test.only('gameboardFactory return a shipsArray', () => {
+describe('create the gameboard and place the ships', () => {
   const gameboard = gameboardFactory();
-  expect(gameboard).toEqual(expect.arrayContaining(shipsArrayExpected));
+
+  it('gameboardFactory return a shipsArray', () => {
+    expect(gameboard.shipsArray).toEqual(expect.arrayContaining(shipsArrayExpected));
+  });
+
+  it('pass the ship length, the coords of the ship`s position and the ship`s rotation and returns the ship`s location', () => {
+    expect(gameboard.placeShip(gameboard.shipsArray[3], 25, true)).toEqual([25, 26, 27, 28]);
+  });
+
+  it('pass the ship length, the coords of the ship`s position and the ship`s not rotation and returns the ship`s location', () => {
+    expect(gameboard.placeShip(gameboard.shipsArray[4], 15, false)).toEqual([15, 25, 35, 45, 55]);
+  });
 });
+
+
