@@ -1,8 +1,8 @@
 import gameboardFactory from '../factories/gameboardFactory';
 const shipsArrayExpected = [
   {
-   "hit": expect.any(expect.any(Function)),
-   "isSunk": expect.any(expect.any(Function)),
+   "hit": expect.any(Function),
+   "isSunk": expect.any(Function),
    "shipLength": 2,
    "shipName": "Destructor",
    "shipPosition": []
