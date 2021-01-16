@@ -146,7 +146,7 @@ describe('create the gameboard and place the ships', () => {
   });
 
   it('check if the carrier is already sunk', () => {
-    expect(gameboard.shipsArray[3].isSunk()).toBeTruthy();
+    expect(gameboard.shipsArray[4].isSunk()).toBeTruthy();
   });
 
   it('check if all the ships are already sunken', () => {
