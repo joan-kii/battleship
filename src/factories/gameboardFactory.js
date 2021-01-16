@@ -10,6 +10,7 @@ const gameboardFactory = () => {
 
   const shipsArray = [destroyer, cruiser, submarine, battleship, carrier];
   const missedShots = [];
+  const sunkenShips = [];
   
   const placeShip = (ship, coords, isRotated) => {
     for(let i = 0; i < ship.shipLength; i++) {
@@ -23,15 +24,28 @@ const gameboardFactory = () => {
   };
 
   const receiveAttack = (shotPlace) => {
+    let isHited = false;
     for(let ship of shipsArray) {
       if(ship.shipPosition.includes(shotPlace)) {
+        isHited = true;
         ship.hit(shotPlace);
       }
     }
-    return missedShots.push(shotPlace);
+    if (!isHited) missedShots.push(shotPlace);
+    return missedShots;
   };
 
-  return { shipsArray,  missedShots, placeShip, receiveAttack };
+  const checkSunkenShips = () => {
+    console.log('call')
+    for(let ship of shipsArray) {
+      if(ship.isSunk()) sunkenShips.push(ship);
+      console.log('sunken')
+    }
+    console.log(sunkenShips)
+    return sunkenShips.length === shipsArray.length;
+  };
+
+  return { shipsArray, missedShots, placeShip, receiveAttack, checkSunkenShips };
 };
 
 export default gameboardFactory;
