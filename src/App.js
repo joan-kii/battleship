@@ -1,8 +1,14 @@
+import GridPlayer from './GridPlayer';
+import GridComputer from './GridComputer';
+import PlayerZone from './PlayerZone';
+
 const App = () => {
   return (
-    <div className="App">
-      <h1>Hello World!</h1>
-    </div>
+    <main className="App">
+      <GridPlayer />   
+      <GridComputer />
+      <PlayerZone />
+    </main>
   );
 };
 
