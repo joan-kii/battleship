@@ -1,20 +1,34 @@
 const playerFactory = (isComputer) => {
-  const player = isComputer ? 'Ordenador' : 'Jugador 1';
+  const name = isComputer ? 'Ordenador' : 'Jugador 1';
   const spotsShooted = [];
 
-  const getRandomNumber = (min, max) => {
-    return Math.random() * (max - min) + min;
+  const getRandomNumber = (max) => {
+    return Math.round(Math.random() * (max));
   };
   
-  const shoot = () => {
+  const shoot = (playerTarget) => {
     if(isComputer) {
-      while(!spotsShooted.includes(getRandomNumber(0, 99))) {
-        spotsShooted.push()
+
+      let availableSpot = true;
+      while(availableSpot) {
+        let computerTarget = getRandomNumber(100);
+        if(!spotsShooted.includes(computerTarget)) {
+          spotsShooted.push(computerTarget);
+          availableSpot = false;
+        }
+      } 
+
+    } else {
+
+      if(!spotsShooted.includes(playerTarget)) {
+        spotsShooted.push(playerTarget);
+      } else {
+        return 'choose again';
       }
     }
+    return spotsShooted;
   };
-  
+  return { name, shoot, spotsShooted }
 };
-
 
 export default playerFactory;
