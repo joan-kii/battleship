@@ -2,7 +2,7 @@ import React from 'react';
 
 const GridComputer = () => {
   return (
-    <div>
+    <div className='grid grid-computer'>
             
     </div>
   )
