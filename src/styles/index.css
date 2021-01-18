@@ -7,6 +7,12 @@ body {
 
 .App {
   display: flex;
+  flex-direction: column;
+}
+
+.playground {
+  display: flex;
+  width: 100%;
 }
 
 /* Grids */
@@ -14,7 +20,6 @@ body {
 .grid div {
   width: 40px;
   height: 40px;
-  background-color: red;
 }
 
 /* Grid Player */
@@ -25,4 +30,21 @@ body {
   display: flex;
   flex-wrap: wrap;
   background-color: blue;
+  margin: auto;
+}
+
+.grid-computer {
+  width: 400px;
+  height: 400px;
+  display: flex;
+  flex-wrap: wrap;
+  background-color: green;
+  margin: auto;
+}
+
+.grid-playerZone {
+  width: 400px;
+  height: 400px;
+  background-color: yellow;
+  margin: auto;
 }

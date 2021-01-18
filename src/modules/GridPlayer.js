@@ -1,20 +1,21 @@
 import React from 'react';
 
+const playerCells = [];
+
 const createGrid = () => {
-  const divs = [];
   for(let i = 0; i < 100; i++) {
-    divs.push(<div key={i}></div>);
+    playerCells.push(<div key={i}></div>);
   }
-  console.log(divs);
-  return divs;
 };
 
 const GridPlayer = () => {
   return (
     <div className='grid grid-player' >
-      { createGrid() }
+      { playerCells }
     </div>
   )
 };
+
+createGrid();
 
 export default GridPlayer;
