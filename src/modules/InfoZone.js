@@ -2,7 +2,7 @@ import React from 'react';
 
 const InfoZone = () => {
   return (
-    <div>
+    <div className='grid-infoZone'>
             
     </div>
   )
