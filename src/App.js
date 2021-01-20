@@ -8,6 +8,31 @@ import gameboardFactory from './factories/gameboardFactory';
 const playerGameboard = gameboardFactory();
 const computerGameboard = gameboardFactory();
 
+const computerTakenSpots = [];
+
+const deployNavy = (navy) => {
+  const randomDirection = Math.random() < 0.5;
+  const shipSpots = [];
+  const direction = randomDirection ? 10 : 1;
+  let randomStart = 0;
+
+  for (let ship of navy.shipsArray) {
+    randomStart = Math.round(Math.random() * (100 - (direction * ship.shipLength)));
+    for (let i of ship.shipLength) {
+      shipSpots.push(randomStart + i);
+    }
+  }
+
+  const isTaken = shipSpots.some(index => computerTakenSpots.includes(index));
+  const isAtRightEdge = shipSpots.some(index => (randomStart + index) % 10 === 9);
+  const isAtLeftEdge = shipSpots.some(index => (randomStart + index) % 10 === 0);
+
+  if (!isTaken && !isAtRightEdge && !isAtLeftEdge) {
+    shipSpots.forEach(index => computerTakenSpots.push(index));
+    navy.placeShip()
+  }
+};
+
 const App = () => {
   return (
     <main className="App">
@@ -27,22 +52,3 @@ const App = () => {
 };
 
 export default App;
-
-// Inputs
-
-document.addEventListener('DOMContentLoaded', () => {
-  const gridPlayer = document.querySelector('.gridPlayer');
-  const gridComputer = document.querySelector('.gridComputer');
-  const playerZone = document.querySelector('.playerZone');
-  const infoZone = document.querySelector('.infoZone');
-  const ships = document.querySelectorAll('.ship');
-  const destroyer = document.querySelector('.Destructor-container');
-  const cruiser = document.querySelector('.Crucero-container');
-  const submarine = document.querySelector('.Submarino-container');
-  const battleship = document.querySelector('.Acorazado-container');
-  const carrier = document.querySelector('.Portaviones-container');
-  const rotateShipsButton = document.querySelector('.rotateShips');
-  const startButton = document.querySelector('.startButton');
-  const turnDisplay = document.querySelector('.turnDisplay');
-  const messages = document.querySelector('.messages');
-});

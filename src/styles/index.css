@@ -72,6 +72,7 @@ body {
 .ship div {
   width: 40px;
   height: 40px;
+  cursor: grab;
 }
 
 .Destructor-container {
