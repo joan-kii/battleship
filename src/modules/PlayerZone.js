@@ -1,15 +1,16 @@
 import React from 'react';
-import gameboardFactory from '../factories/gameboardFactory';
 
 const shipDivs = (ship) => {
+  const renderShipDivs = [];
   for(let i = 0; i < ship.shipLength; i++) {
-    <div key={i}></div>
+    renderShipDivs.push(<div key={i} id={`${ship.shipName}-${i}`}></div>);
   }
+  return renderShipDivs;
 };
 
-const PlayerZone = () => {
+const PlayerZone = ({ playerGameboard }) => {
 
-  const playerFleet = gameboardFactory().shipsArray;
+  const playerFleet = playerGameboard.shipsArray;
   const renderPlayerFleet = playerFleet.map((ship, index) => {
     return <div className={`ship ${ship.shipName}-container`} key={index} draggable='true'>
       {shipDivs(ship)}
@@ -19,6 +20,7 @@ const PlayerZone = () => {
   return (
     <div className='grid-playerZone'>
       { renderPlayerFleet }   
+      <button className='button rotateShips'>Girar Barcos</button>
     </div>
   )
 };

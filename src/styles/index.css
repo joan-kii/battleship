@@ -60,3 +60,41 @@ body {
   background-color: red;
   margin: auto;
 }
+
+/* Ships */
+
+.ship {
+  display: flex;
+  background-color: grey;
+  margin: 10px;
+}
+
+.ship div {
+  width: 40px;
+  height: 40px;
+}
+
+.Destructor-container {
+  width: 80px;
+  height: 40px;
+}
+
+.Crucero-container {
+  width: 120px;
+  height: 40px;
+}
+
+.Submarino-container {
+  width: 120px;
+  height: 40px;
+}
+
+.Acorazado-container {
+  width: 160px;
+  height: 40px;
+}
+
+.Portaviones-container {
+  width: 200px;
+  height: 40px;
+}
