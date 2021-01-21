@@ -13,11 +13,13 @@ body {
 .playground {
   display: flex;
   width: 100%;
+  padding-top: 30px;
 }
 
 .info-container {
   display: flex;
   width: 100%;
+  padding-top: 30px;
 }
 
 /* Grids */

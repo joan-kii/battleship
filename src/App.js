@@ -8,30 +8,42 @@ import gameboardFactory from './factories/gameboardFactory';
 const playerGameboard = gameboardFactory();
 const computerGameboard = gameboardFactory();
 
+const playerPositions = [];
+const computerPositions = [];
+
+const playerTakenSpots = [];
 const computerTakenSpots = [];
 
-const deployNavy = (navy) => {
-  const randomDirection = Math.random() < 0.5;
-  const shipSpots = [];
-  const direction = randomDirection ? 10 : 1;
-  let randomStart = 0;
-
-  for (let ship of navy.shipsArray) {
-    randomStart = Math.round(Math.random() * (100 - (direction * ship.shipLength)));
-    for (let i of ship.shipLength) {
-      shipSpots.push(randomStart + i);
-    }
+const deployNavy = (navy, ship, takenSpots) => {
+  let randomDirection = Math.random() < 0.5;
+  let shipSpots = [];
+  let direction = randomDirection ? 10 : 1;
+  let randomStart = Math.round(Math.random() * (100 - (direction * ship.shipLength)));
+  for (let i = 0; i < ship.shipLength; i++) {
+    shipSpots.push(randomStart + i);
   }
-
-  const isTaken = shipSpots.some(index => computerTakenSpots.includes(index));
-  const isAtRightEdge = shipSpots.some(index => (randomStart + index) % 10 === 9);
-  const isAtLeftEdge = shipSpots.some(index => (randomStart + index) % 10 === 0);
+  const isTaken = shipSpots.some(index => takenSpots.includes(index));
+  const isAtRightEdge = shipSpots.some(index => index % 10 === 9);
+  const isAtLeftEdge = shipSpots.some(index => index % 10 === 0);
 
   if (!isTaken && !isAtRightEdge && !isAtLeftEdge) {
-    shipSpots.forEach(index => computerTakenSpots.push(index));
-    navy.placeShip()
-  }
+    shipSpots.forEach(index => takenSpots.push(index));
+    return navy.placeShip(ship, shipSpots[0], randomDirection);
+  } else deployNavy(navy, ship, takenSpots); 
 };
+
+/* for (let ship of playerGameboard.shipsArray) {
+  const playerShipPosition = deployNavy(playerGameboard, ship, playerTakenSpots);
+  playerPositions.push(playerShipPosition);
+} */
+
+for (let ship of computerGameboard.shipsArray) {
+  const computerShipPosition = deployNavy(computerGameboard, ship, computerTakenSpots);
+  computerPositions.push(computerShipPosition);
+}
+
+console.log(playerPositions)
+console.log(computerPositions)
 
 const App = () => {
   return (
