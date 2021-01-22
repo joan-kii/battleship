@@ -8,7 +8,9 @@ const createGrid = () => {
   }
 };
 
-const GridComputer = () => {
+const GridComputer = ({ computerGameboard }) => {
+  console.log(computerGameboard)
+  
   return (
     <div className='grid grid-computer'>
       { computerCells }  

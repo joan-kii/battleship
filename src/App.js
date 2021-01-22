@@ -8,10 +8,7 @@ import gameboardFactory from './factories/gameboardFactory';
 const playerGameboard = gameboardFactory();
 const computerGameboard = gameboardFactory();
 
-/* const playerPositions = []; */
-const computerPositions = [];
-
-/* const playerTakenSpots = []; */
+const playerTakenSpots = [];
 const computerTakenSpots = [];
 
 const deployNavy = (navy, ship, takenSpots) => {
@@ -34,26 +31,20 @@ const deployNavy = (navy, ship, takenSpots) => {
   }
 };
 
-/* for (let ship of playerGameboard.shipsArray) {
-  const playerShipPosition = deployNavy(playerGameboard, ship, playerTakenSpots);
-  playerPositions.push(playerShipPosition);
-} */
-
-for (let ship of computerGameboard.shipsArray) {
-  /* console.log('flota: ', computerGameboard, 'barco: ', ship, 'ocupados: ', computerTakenSpots) */
-  const computerShipPosition = deployNavy(computerGameboard, ship, computerTakenSpots);
-  computerPositions.push(computerShipPosition);
+for (let ship of playerGameboard.shipsArray) {
+  deployNavy(playerGameboard, ship, playerTakenSpots);
 }
 
-/* console.log(playerPositions) */
-/* console.log(computerPositions) */
+for (let ship of computerGameboard.shipsArray) {
+  deployNavy(computerGameboard, ship, computerTakenSpots);
+}
 
 const App = () => {
   return (
     <main className="App">
       <div className='playground'>
-        <GridPlayer />   
-        <GridComputer />
+        <GridPlayer playerGameboard={playerGameboard} />   
+        <GridComputer computerGameboard={computerGameboard} />
       </div>
       <div className='info-container'>
         <PlayerZone playerGameboard={playerGameboard} />

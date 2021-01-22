@@ -8,7 +8,9 @@ const createGrid = () => {
   }
 };
 
-const GridPlayer = () => {
+const GridPlayer = ({ playerGameboard }) => {
+  console.log(playerGameboard)
+
   return (
     <div className='grid grid-player' >
       { playerCells }
