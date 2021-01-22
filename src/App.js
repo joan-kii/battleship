@@ -8,10 +8,10 @@ import gameboardFactory from './factories/gameboardFactory';
 const playerGameboard = gameboardFactory();
 const computerGameboard = gameboardFactory();
 
-const playerPositions = [];
+/* const playerPositions = []; */
 const computerPositions = [];
 
-const playerTakenSpots = [];
+/* const playerTakenSpots = []; */
 const computerTakenSpots = [];
 
 const deployNavy = (navy, ship, takenSpots) => {
@@ -29,7 +29,9 @@ const deployNavy = (navy, ship, takenSpots) => {
   if (!isTaken && !isAtRightEdge && !isAtLeftEdge) {
     shipSpots.forEach(index => takenSpots.push(index));
     return navy.placeShip(ship, shipSpots[0], randomDirection);
-  } else deployNavy(navy, ship, takenSpots); 
+  } else {
+    deployNavy(navy, ship, takenSpots); 
+  }
 };
 
 /* for (let ship of playerGameboard.shipsArray) {
@@ -38,12 +40,13 @@ const deployNavy = (navy, ship, takenSpots) => {
 } */
 
 for (let ship of computerGameboard.shipsArray) {
+  /* console.log('flota: ', computerGameboard, 'barco: ', ship, 'ocupados: ', computerTakenSpots) */
   const computerShipPosition = deployNavy(computerGameboard, ship, computerTakenSpots);
   computerPositions.push(computerShipPosition);
 }
 
-console.log(playerPositions)
-console.log(computerPositions)
+/* console.log(playerPositions) */
+/* console.log(computerPositions) */
 
 const App = () => {
   return (

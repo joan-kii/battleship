@@ -19,6 +19,7 @@ const gameboardFactory = () => {
         ship.shipPosition.push(coords + (i * 10));
       }
     }
+    /* console.log('gameboardFactory: ', ship.shipPosition) */
     return ship.shipPosition;
   };
 
