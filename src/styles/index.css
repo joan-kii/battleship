@@ -71,10 +71,6 @@ body {
   margin: 10px;
 }
 
-.placedShip {
-  display: flex;
-}
-
 .ship div {
   width: 40px;
   height: 40px;
@@ -86,9 +82,19 @@ body {
   height: 40px;
 }
 
+.Destructor-container-vertical {
+  width: 40px;
+  height: 80px;
+}
+
 .Crucero-container {
   width: 120px;
   height: 40px;
+}
+
+.Crucero-container-vertical {
+  width: 40px;
+  height: 120px;
 }
 
 .Submarino-container {
@@ -104,4 +110,24 @@ body {
 .Portaviones-container {
   width: 200px;
   height: 40px;
+}
+
+.Destructor {
+  background-color: grey;
+}
+
+.Crucero {
+  background-color: grey;
+}
+
+.Submarino {
+  background-color: grey;
+}
+
+.Acorazado {
+  background-color: grey;
+}
+
+.Portaviones {
+  background-color: grey;
 }
