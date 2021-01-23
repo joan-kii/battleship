@@ -5,9 +5,9 @@ const PlayerZone = ({ playerGameboard }) => {
   const [isHorizontal, setIsHorizontal] = useState(true);
   const rotateShip = (container, ship) => {
     if (isHorizontal) {
-      container.className = `ship ${ship.shipName}-container-vertical`;
+      container.className = `ship ${ship}-container-vertical`;
     } else {
-      container.className = `ship ${ship.shipName}-container`;
+      container.className = `ship ${ship}-container`;
     }
     setIsHorizontal(!isHorizontal);
   }
@@ -25,7 +25,7 @@ const PlayerZone = ({ playerGameboard }) => {
     className={`ship ${ship.shipName}-container`} 
     key={index} 
     draggable='true'
-    onDoubleClick={(e) => rotateShip(e.target.parentNode, ship)}
+    onDoubleClick={(e) => rotateShip(e.target.parentNode, ship.shipName)}
     >
       {shipDivs(ship)}
     </div>
