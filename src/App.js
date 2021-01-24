@@ -25,8 +25,10 @@ const deployNavy = (navy, ship, takenSpots) => {
   }
 
   const isTaken = shipSpots.some(index => takenSpots.includes(index));
-  const isAtRightEdge = shipSpots.some(index => index % 10 === 9);
-  const isAtLeftEdge = shipSpots.some(index => index % 10 === 0);
+  const sliceShipSpotsRight = shipSpots.slice(0, ship.shipLength - 1);
+  const sliceShipSpotsLeft = shipSpots.slice(1, ship.shipLength);
+  const isAtRightEdge = sliceShipSpotsRight.some(index => index % 10 === 9);
+  const isAtLeftEdge = sliceShipSpotsLeft.some(index => index % 10 === 0);
   const isAtBottomEdge = shipSpots.some(index => index > 99);
   
   if (!isTaken && !isAtRightEdge && !isAtLeftEdge && !isAtBottomEdge) {
