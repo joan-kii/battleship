@@ -112,6 +112,10 @@ body {
   width: 160px;
   height: 40px;
 }
+.Acorazado-container-vertical {
+  width: 40px;
+  height: 160px;
+}
 
 .Portaviones-container {
   width: 200px;

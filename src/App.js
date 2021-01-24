@@ -8,7 +8,6 @@ import gameboardFactory from './factories/gameboardFactory';
 const playerGameboard = gameboardFactory();
 const computerGameboard = gameboardFactory();
 
-/* const playerTakenSpots = []; */
 const computerTakenSpots = [];
 
 const deployNavy = (navy, ship, takenSpots) => {

@@ -1,15 +1,14 @@
-import React, { useState } from 'react';
+import React from 'react';
 
 const PlayerZone = ({ playerGameboard }) => {
 
-  const [isHorizontal, setIsHorizontal] = useState(true);
   const rotateShip = (container, ship) => {
-    if (isHorizontal) {
-      container.className = `ship ${ship}-container-vertical`;
+    if (ship.isHorizontal) {
+      container.className = `ship ${ship.shipName}-container-vertical`;
     } else {
-      container.className = `ship ${ship}-container`;
+      container.className = `ship ${ship.shipName}-container`;
     }
-    setIsHorizontal(!isHorizontal);
+    ship.isHorizontal = !ship.isHorizontal;
   }
   const shipDivs = (ship) => {
     const renderShipDivs = [];
@@ -21,11 +20,12 @@ const PlayerZone = ({ playerGameboard }) => {
 
   const playerFleet = playerGameboard.shipsArray;
   const renderPlayerFleet = playerFleet.map((ship, index) => {
+    ship.isHorizontal = true;
     return <div 
     className={`ship ${ship.shipName}-container`} 
     key={index} 
     draggable='true'
-    onDoubleClick={(e) => rotateShip(e.target.parentNode, ship.shipName)}
+    onDoubleClick={(e) => rotateShip(e.target.parentNode, ship)}
     >
       {shipDivs(ship)}
     </div>
