@@ -8,6 +8,8 @@ import gameboardFactory from './factories/gameboardFactory';
 const playerGameboard = gameboardFactory();
 const computerGameboard = gameboardFactory();
 
+// Place Computer Fleet
+
 const computerTakenSpots = [];
 
 const deployNavy = (navy, ship, takenSpots) => {
@@ -43,11 +45,66 @@ for (let ship of computerGameboard.shipsArray) {
   deployNavy(computerGameboard, ship, computerTakenSpots);
 }
 
+// Place Player Fleet
+
+const playerCells = [];
+const createGrid = () => {
+
+  for(let i = 0; i < 100; i++) {
+    playerCells.push(<div key={i}></div>);
+  }
+};
+createGrid();
+
+const playerFleet = playerGameboard.shipsArray;
+console.log(playerFleet)
+let selectedShipIndex;
+
+/* playerFleet.forEach(ship => ship.addEventListener('mousedown', e => {
+  selectedShipIndex = e.target.id;
+})) */
+
+const dragStart = (e) => {
+  console.log(selectedShipIndex);
+};
+
+const dragOver = () => {
+
+};
+
+const dragEnter = () => {
+
+};
+
+const dragLeave = () => {
+
+};
+
+const dragDrop = () => {
+
+};
+
+const dragEnd = () => {
+
+};
+
+/* playerFleet.forEach(ship => ship.addEventListener('dragstart', dragStart));
+playerCells.forEach(cell => cell.addEventListener('dragstart', dragStart));
+playerCells.forEach(cell => cell.addEventListener('dragover', dragOver));
+playerCells.forEach(cell => cell.addEventListener('dragenter', dragEnter));
+playerCells.forEach(cell => cell.addEventListener('dragleave', dragLeave));
+playerCells.forEach(cell => cell.addEventListener('drop', dragDrop));
+playerCells.forEach(cell => cell.addEventListener('dragend', dragEnd)); */
+
+
+
 const App = () => {
   return (
     <main className="App">
       <div className='playground'>
-        <GridPlayer playerGameboard={playerGameboard} />   
+        <GridPlayer 
+        playerGameboard={playerGameboard} 
+        playerCells={playerCells} />   
         <GridComputer computerGameboard={computerGameboard} />
       </div>
       <div className='info-container'>
