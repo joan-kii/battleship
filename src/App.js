@@ -45,58 +45,80 @@ for (let ship of computerGameboard.shipsArray) {
   deployNavy(computerGameboard, ship, computerTakenSpots);
 }
 
-// Place Player Fleet
+// Create Player Grid
 
 const playerCells = [];
 const createGrid = () => {
-
+  
   for(let i = 0; i < 100; i++) {
     playerCells.push(<div key={i}></div>);
   }
 };
 createGrid();
 
-const playerFleet = playerGameboard.shipsArray;
-console.log(playerFleet)
-let selectedShipIndex;
+// Place Player Zone Fleet
 
-/* playerFleet.forEach(ship => ship.addEventListener('mousedown', e => {
+const playerFleet = playerGameboard.shipsArray;
+
+const shipDivs = (ship) => {
+  const renderShipDivs = [];
+  for(let i = 0; i < ship.shipLength; i++) {
+    renderShipDivs.push(<div key={i} id={`${ship.shipName}-${i}`}></div>);
+  }
+  return renderShipDivs;
+};
+
+const rotateShip = (container, ship) => {
+  if (ship.isHorizontal) {
+    container.className = `ship ${ship.shipName}-container-vertical`;
+  } else {
+    container.className = `ship ${ship.shipName}-container`;
+  }
+  ship.isHorizontal = !ship.isHorizontal;
+};
+
+const renderPlayerFleet = playerFleet.map((ship, index) => {
+  ship.isHorizontal = true;
+  return <div 
+  className={`ship ${ship.shipName}-container`} 
+  key={index} 
+  draggable='true'
+  onDoubleClick={(e) => rotateShip(e.target.parentNode, ship)}
+  onMouseDown={(e) => handleMouseDown(e)}
+  onDragStart={(e) => dragStart(e)}
+  onDragOver={(e) => e.preventDefault()}
+  onDragEnter={(e) => e.preventDefault()}
+  onDragLeave={(e) => e.preventDefault()}
+  onDrop={(e) => dragDrop(e)}
+  onDragEnd={(e) => dragEnd(e)}
+  >
+    {shipDivs(ship)}
+  </div>
+});
+
+// Drag and Drop Player Fleet
+
+let selectedShipIndex;
+let draggedShip;
+let draggedShipLength;
+
+
+const handleMouseDown = (e) => {
   selectedShipIndex = e.target.id;
-})) */
+};
 
 const dragStart = (e) => {
-  console.log(selectedShipIndex);
+  draggedShip = e.target;
+  draggedShipLength = draggedShip.children.length;
 };
 
-const dragOver = () => {
-
+const dragDrop = (e) => {
+  console.log(e);
 };
 
-const dragEnter = () => {
-
+const dragEnd = (e) => {
+  console.log(e);
 };
-
-const dragLeave = () => {
-
-};
-
-const dragDrop = () => {
-
-};
-
-const dragEnd = () => {
-
-};
-
-/* playerFleet.forEach(ship => ship.addEventListener('dragstart', dragStart));
-playerCells.forEach(cell => cell.addEventListener('dragstart', dragStart));
-playerCells.forEach(cell => cell.addEventListener('dragover', dragOver));
-playerCells.forEach(cell => cell.addEventListener('dragenter', dragEnter));
-playerCells.forEach(cell => cell.addEventListener('dragleave', dragLeave));
-playerCells.forEach(cell => cell.addEventListener('drop', dragDrop));
-playerCells.forEach(cell => cell.addEventListener('dragend', dragEnd)); */
-
-
 
 const App = () => {
   return (
@@ -108,7 +130,7 @@ const App = () => {
         <GridComputer computerGameboard={computerGameboard} />
       </div>
       <div className='info-container'>
-        <PlayerZone playerGameboard={playerGameboard} />
+        <PlayerZone renderPlayerFleet={renderPlayerFleet} />
         <InfoZone />
       </div>
       <footer>
