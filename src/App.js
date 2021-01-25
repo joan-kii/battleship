@@ -51,7 +51,18 @@ const playerCells = [];
 const createGrid = () => {
   
   for(let i = 0; i < 100; i++) {
-    playerCells.push(<div key={i}></div>);
+    playerCells.push(
+      <div 
+      key={i}
+      id={i}
+      onDragStart={(e) => dragStart(e)}
+      onDragOver={(e) => dragOver(e)}
+      onDragEnter={(e) => dragEnter(e)}
+      onDragLeave={(e) => dragLeave(e)}
+      onDrop={(e) => dragDrop(e)}
+      onDragEnd={(e) => dragEnd(e)}>
+      </div>
+    );
   }
 };
 createGrid();
@@ -64,6 +75,7 @@ const shipDivs = (ship) => {
   const renderShipDivs = [];
   for(let i = 0; i < ship.shipLength; i++) {
     renderShipDivs.push(<div key={i} id={`${ship.shipName}-${i}`}></div>);
+    ship.lastIdDiv = i;
   }
   return renderShipDivs;
 };
@@ -79,46 +91,67 @@ const rotateShip = (container, ship) => {
 
 const renderPlayerFleet = playerFleet.map((ship, index) => {
   ship.isHorizontal = true;
+  ship.lastIdDiv = 0;
   return <div 
-  className={`ship ${ship.shipName}-container`} 
-  key={index} 
-  draggable='true'
-  onDoubleClick={(e) => rotateShip(e.target.parentNode, ship)}
-  onMouseDown={(e) => handleMouseDown(e)}
-  onDragStart={(e) => dragStart(e)}
-  onDragOver={(e) => e.preventDefault()}
-  onDragEnter={(e) => e.preventDefault()}
-  onDragLeave={(e) => e.preventDefault()}
-  onDrop={(e) => dragDrop(e)}
-  onDragEnd={(e) => dragEnd(e)}
-  >
+    key={index}
+    className={`ship ${ship.shipName}-container`} 
+    draggable='true'
+    onDoubleClick={(e) => rotateShip(e.target.parentNode, ship)}
+    onMouseDown={(e) => handleMouseDown(e)}
+    onDragStart={(e) => dragStart(e, ship)}>
     {shipDivs(ship)}
   </div>
 });
 
 // Drag and Drop Player Fleet
 
-let selectedShipIndex;
+let selectedShip;
+let selectedShipElement;
 let draggedShip;
 let draggedShipLength;
 
 
 const handleMouseDown = (e) => {
-  selectedShipIndex = e.target.id;
+  selectedShipElement = e.target.id;
+  selectedShipElement = parseInt(selectedShipElement.substr(-1));
 };
 
-const dragStart = (e) => {
+const dragStart = (e, ship) => {
+  selectedShip = ship;
   draggedShip = e.target;
   draggedShipLength = draggedShip.children.length;
 };
 
+const dragOver = (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
+const dragEnter = (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
+const dragLeave = (e) => {
+  e.stopPropagation();
+  e.preventDefault();
+};
+
 const dragDrop = (e) => {
-  console.log(e);
+  let shipLastId = selectedShip.lastIdDiv;
+  let shipClass = selectedShip.shipName;
+  let shipPlaceId = shipLastId + parseInt(e.target.id);
+  shipPlaceId -= selectedShipElement;
+  console.log(shipClass)
+  console.log(shipPlaceId)
+  console.log(draggedShipLength)
 };
 
 const dragEnd = (e) => {
-  console.log(e);
+  /* console.log(e); */
 };
+
+// Render
 
 const App = () => {
   return (
