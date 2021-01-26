@@ -145,6 +145,45 @@ const dragDrop = (e) => {
   console.log(shipClass)
   console.log(shipPlaceId)
   console.log(draggedShipLength)
+  console.log(selectedShip)
+
+  if (selectedShip.isHorizontal) {
+    for (let i = 0; i < draggedShipLength; i++) {
+
+      playerCells[parseInt(e.target.id) - selectedShipElement + i] = <div 
+      key={parseInt(e.target.id) - selectedShipElement + i}
+      id={parseInt(e.target.id) - selectedShipElement + i}
+      className={shipClass + `-taken`}
+      onDragStart={(e) => dragStart(e)}
+      onDragOver={(e) => dragOver(e)}
+      onDragEnter={(e) => dragEnter(e)}
+      onDragLeave={(e) => dragLeave(e)}
+      onDrop={(e) => dragDrop(e)}
+      onDragEnd={(e) => dragEnd(e)}>
+      </div>;
+
+      selectedShip.shipPosition.push(parseInt(e.target.id) + i);
+
+    } 
+  } else if (!selectedShip.isHorizontal) {
+    for (let i = 0; i < draggedShipLength; i++) {
+
+      playerCells[parseInt(e.target.id) - selectedShipElement + i * 10] = <div 
+      key={parseInt(e.target.id) - selectedShipElement + i * 10}
+      id={parseInt(e.target.id) - selectedShipElement + i * 10}
+      className={shipClass + `-taken`}
+      onDragStart={(e) => dragStart(e)}
+      onDragOver={(e) => dragOver(e)}
+      onDragEnter={(e) => dragEnter(e)}
+      onDragLeave={(e) => dragLeave(e)}
+      onDrop={(e) => dragDrop(e)}
+      onDragEnd={(e) => dragEnd(e)}>
+      </div>;
+
+      selectedShip.shipPosition.push(parseInt(e.target.id) - selectedShipElement + i * 10);
+
+    }
+  } else return;
 };
 
 const dragEnd = (e) => {
