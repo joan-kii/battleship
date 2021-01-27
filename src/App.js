@@ -94,6 +94,7 @@ const renderPlayerFleet = playerFleet.map((ship, index) => {
   ship.lastIdDiv = 0;
   return <div 
     key={index}
+    id={ship.shipName}
     className={`ship ${ship.shipName}-container`} 
     draggable='true'
     onDoubleClick={(e) => rotateShip(e.target.parentNode, ship)}
@@ -142,14 +143,10 @@ const dragDrop = (e) => {
   let shipClass = selectedShip.shipName;
   let shipPlaceId = shipLastId + parseInt(e.target.id);
   shipPlaceId -= selectedShipElement;
-  console.log(shipClass)
-  console.log(shipPlaceId)
-  console.log(draggedShipLength)
-  console.log(selectedShip)
 
   if (selectedShip.isHorizontal) {
     for (let i = 0; i < draggedShipLength; i++) {
-
+      
       playerCells[parseInt(e.target.id) - selectedShipElement + i] = <div 
       key={parseInt(e.target.id) - selectedShipElement + i}
       id={parseInt(e.target.id) - selectedShipElement + i}
@@ -162,15 +159,15 @@ const dragDrop = (e) => {
       onDragEnd={(e) => dragEnd(e)}>
       </div>;
 
-      selectedShip.shipPosition.push(parseInt(e.target.id) + i);
+      selectedShip.shipPosition.push(parseInt(e.target.id) - selectedShipElement + i);
 
     } 
   } else if (!selectedShip.isHorizontal) {
     for (let i = 0; i < draggedShipLength; i++) {
 
-      playerCells[parseInt(e.target.id) - selectedShipElement + i * 10] = <div 
-      key={parseInt(e.target.id) - selectedShipElement + i * 10}
-      id={parseInt(e.target.id) - selectedShipElement + i * 10}
+      playerCells[parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10)] = <div 
+      key={parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10)}
+      id={parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10)}
       className={shipClass + `-taken`}
       onDragStart={(e) => dragStart(e)}
       onDragOver={(e) => dragOver(e)}
@@ -180,10 +177,13 @@ const dragDrop = (e) => {
       onDragEnd={(e) => dragEnd(e)}>
       </div>;
 
-      selectedShip.shipPosition.push(parseInt(e.target.id) - selectedShipElement + i * 10);
+      selectedShip.shipPosition.push(parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10));
 
     }
   } else return;
+
+  console.log(renderPlayerFleet[playerFleet.indexOf(selectedShip)])
+  console.log(playerFleet.indexOf(selectedShip))
 };
 
 const dragEnd = (e) => {
