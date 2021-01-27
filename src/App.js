@@ -1,3 +1,4 @@
+import React, { useState } from 'react';
 import GridPlayer from './modules/GridPlayer';
 import GridComputer from './modules/GridComputer';
 import PlayerZone from './modules/PlayerZone';
@@ -55,12 +56,12 @@ const createGrid = () => {
       <div 
       key={i}
       id={i}
-      onDragStart={(e) => dragStart(e)}
+      /* onDragStart={(e) => dragStart(e)}*/
       onDragOver={(e) => dragOver(e)}
       onDragEnter={(e) => dragEnter(e)}
       onDragLeave={(e) => dragLeave(e)}
       onDrop={(e) => dragDrop(e)}
-      onDragEnd={(e) => dragEnd(e)}>
+      /* onDragEnd={(e) => e.target.add.className = 'ship'} */>
       </div>
     );
   }
@@ -99,7 +100,8 @@ const renderPlayerFleet = playerFleet.map((ship, index) => {
     draggable='true'
     onDoubleClick={(e) => rotateShip(e.target.parentNode, ship)}
     onMouseDown={(e) => handleMouseDown(e)}
-    onDragStart={(e) => dragStart(e, ship)}>
+    onDragStart={(e) => dragStart(e, ship)}
+    onDragEnd={(e) => dragEnd(e)}>
     {shipDivs(ship)}
   </div>
 });
@@ -150,13 +152,13 @@ const dragDrop = (e) => {
       playerCells[parseInt(e.target.id) - selectedShipElement + i] = <div 
       key={parseInt(e.target.id) - selectedShipElement + i}
       id={parseInt(e.target.id) - selectedShipElement + i}
-      className={shipClass + `-taken`}
+      /* className={shipClass}
       onDragStart={(e) => dragStart(e)}
       onDragOver={(e) => dragOver(e)}
       onDragEnter={(e) => dragEnter(e)}
       onDragLeave={(e) => dragLeave(e)}
       onDrop={(e) => dragDrop(e)}
-      onDragEnd={(e) => dragEnd(e)}>
+      onDragEnd={(e) => dragEnd(e)} */>
       </div>;
 
       selectedShip.shipPosition.push(parseInt(e.target.id) - selectedShipElement + i);
@@ -168,13 +170,13 @@ const dragDrop = (e) => {
       playerCells[parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10)] = <div 
       key={parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10)}
       id={parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10)}
-      className={shipClass + `-taken`}
+      /* className={shipClass}
       onDragStart={(e) => dragStart(e)}
       onDragOver={(e) => dragOver(e)}
       onDragEnter={(e) => dragEnter(e)}
       onDragLeave={(e) => dragLeave(e)}
       onDrop={(e) => dragDrop(e)}
-      onDragEnd={(e) => dragEnd(e)}>
+      onDragEnd={(e) => dragEnd(e)} */>
       </div>;
 
       selectedShip.shipPosition.push(parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10));
@@ -182,17 +184,23 @@ const dragDrop = (e) => {
     }
   } else return;
 
-  console.log(renderPlayerFleet[playerFleet.indexOf(selectedShip)])
-  console.log(playerFleet.indexOf(selectedShip))
 };
 
 const dragEnd = (e) => {
-  /* console.log(e); */
+  for (let pos of selectedShip.shipPosition) {
+    playerCells[pos] = <div 
+    key={pos}
+    id={pos}
+    className={'ship'}></div>
+    console.log(playerCells[pos])
+  }
+  e.target.remove()
 };
 
 // Render
 
 const App = () => {
+
   return (
     <main className="App">
       <div className='playground'>

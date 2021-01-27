@@ -4,7 +4,7 @@ const PlayerZone = ({ renderPlayerFleet }) => {
 
   return (
     <div className='grid-playerZone'>
-      { renderPlayerFleet }   
+      { renderPlayerFleet } 
       <h3>Haz doble click para girar el barco.</h3>
     </div>
   )
