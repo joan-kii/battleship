@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import GridPlayer from './modules/GridPlayer';
 import GridComputer from './modules/GridComputer';
 import PlayerZone from './modules/PlayerZone';
@@ -46,28 +46,6 @@ for (let ship of computerGameboard.shipsArray) {
   deployNavy(computerGameboard, ship, computerTakenSpots);
 }
 
-// Create Player Grid
-
-const playerCells = [];
-const createGrid = () => {
-  
-  for(let i = 0; i < 100; i++) {
-    playerCells.push(
-      <div 
-      key={i}
-      id={i}
-      className={''}
-      onDragOver={(e) => dragOver(e)}
-      onDragEnter={(e) => dragEnter(e)}
-      onDragLeave={(e) => dragLeave(e)}
-      onDrop={(e) => dragDrop(e)}
-      onDragEnd={(e) => dragEnd()}>
-      </div>
-    );
-  }
-};
-createGrid();
-
 // Place Player Zone Fleet
 
 const playerFleet = playerGameboard.shipsArray;
@@ -101,7 +79,7 @@ const renderPlayerFleet = playerFleet.map((ship, index) => {
     onDoubleClick={(e) => rotateShip(e.target.parentNode, ship)}
     onMouseDown={(e) => handleMouseDown(e)}
     onDragStart={(e) => dragStart(e, ship)}
-    onDragEnd={(e) => e.target.remove()}>
+    onDragEnd={(e) => dragEnd(e)}>
     {shipDivs(ship)}
   </div>
 });
@@ -125,59 +103,65 @@ const dragStart = (e, ship) => {
   draggedShipLength = draggedShip.children.length;
 };
 
-const dragOver = (e) => {
+const dragPrevent = (e) => {
   e.stopPropagation();
   e.preventDefault();
-};
-
-const dragEnter = (e) => {
-  e.stopPropagation();
-  e.preventDefault();
-};
-
-const dragLeave = (e) => {
-  e.stopPropagation();
-  e.preventDefault();
-};
-
-const dragDrop = (e) => {
-  let shipLastId = selectedShip.lastIdDiv;
-  let shipClass = selectedShip.shipName;
-  let shipPlaceId = shipLastId + parseInt(e.target.id);
-  shipPlaceId -= selectedShipElement;
-
-  if (selectedShip.isHorizontal) {
-    for (let i = 0; i < draggedShipLength; i++) {
-      console.log(playerCells[parseInt(e.target.id) - selectedShipElement + i])
-      selectedShip.shipPosition.push(parseInt(e.target.id) - selectedShipElement + i);
-    } 
-
-  } else if (!selectedShip.isHorizontal) {
-    for (let i = 0; i < draggedShipLength; i++) {
-      e.target.classList.add('ship')
-      /* playerCells[parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10)] */
-
-      selectedShip.shipPosition.push(parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10));
-    }
-
-  } else return;
-
 };
 
 const dragEnd = (e) => {
-  /* console.log(e) */
+  if (selectedShip.shipPosition.length !== 0) e.target.remove();
 };
 
 // Render
 
 const App = () => {
 
+  // Create Player Grid
+
+  const createGrid = () => {
+    let cell;
+    let cells = [];
+    for(let i = 0; i < 100; i++) {
+      cell = <div 
+      key={i}
+      id={i}
+      onDragOver={(e) => dragPrevent(e)}
+      onDrop={(e) => dragDrop(e)} ></div>
+      cells.push(cell);
+    }
+    return cells;
+  };
+
+  const [playerCells, setPlayerCells] = useState(createGrid());
+  let newCells = [...playerCells];
+  
+  const dragDrop = (e) => {
+    e.preventDefault();
+    let shipClass = selectedShip.shipName;
+  
+    if (selectedShip.isHorizontal) {
+      for (let i = 0; i < draggedShipLength; i++) {
+        const index = parseInt(e.target.id) - selectedShipElement + i;
+        const newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
+        newCells.splice(index, 1, newCell);
+        selectedShip.shipPosition.push(index);
+      }
+  
+    } else {
+      for (let i = 0; i < draggedShipLength; i++) {
+        const index = parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10);
+        const newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
+        newCells.splice(index, 1, newCell);
+        selectedShip.shipPosition.push(index);
+      }
+    }
+    setPlayerCells([...newCells]);
+  };
+
   return (
     <main className="App">
       <div className='playground'>
-        <GridPlayer 
-        playerGameboard={playerGameboard} 
-        playerCells={playerCells} />   
+        <GridPlayer playerCells={playerCells} />   
         <GridComputer computerGameboard={computerGameboard} />
       </div>
       <div className='info-container'>
