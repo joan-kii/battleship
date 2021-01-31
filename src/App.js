@@ -134,27 +134,49 @@ const App = () => {
 
   const [playerCells, setPlayerCells] = useState(createGrid());
   let newCells = [...playerCells];
-  
+  const notAllowedHorizontal = [
+                            0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 
+                            1, 11, 21, 31, 41, 51, 61, 71, 81, 91, 
+                            2, 12, 22, 32, 42, 52, 62, 72, 82, 92,
+                            3, 13, 23, 33, 43, 53, 63, 73, 83, 93
+                            ];
+  const notAllowedVertical = [
+                            90, 91, 92, 93, 94, 95, 96, 97, 98, 99,
+                            80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 
+                            70, 71, 72, 73, 74, 75, 76, 77, 78, 79,
+                            60, 61, 62, 63, 64, 65, 66, 67, 68, 69
+                            ];                          
+
   const dragDrop = (e) => {
     e.preventDefault();
     let shipClass = selectedShip.shipName;
   
     if (selectedShip.isHorizontal) {
-      for (let i = 0; i < draggedShipLength; i++) {
-        const index = parseInt(e.target.id) - selectedShipElement + i;
-        const newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
-        newCells.splice(index, 1, newCell);
-        selectedShip.shipPosition.push(index);
+      const notAllowedSpots = notAllowedHorizontal.splice(0, 10 * selectedShip.shipLength);
+      console.log(notAllowedSpots)
+      const checkAllowedPlace = notAllowedSpots.includes(selectedShip.shipLength - 1);
+      if (!checkAllowedPlace) {
+        for (let i = 0; i < draggedShipLength; i++) {
+          const index = parseInt(e.target.id) - selectedShipElement + i;
+          const newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
+          newCells.splice(index, 1, newCell);
+          selectedShip.shipPosition.push(index);
+        }
       }
   
-    } else {
-      for (let i = 0; i < draggedShipLength; i++) {
-        const index = parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10);
-        const newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
-        newCells.splice(index, 1, newCell);
-        selectedShip.shipPosition.push(index);
+    } else if (!selectedShip.isHorizontal) {
+      const notAllowedSpots = notAllowedVertical.splice(0, 10 * selectedShip.shipLength);
+      const checkAllowedPlace = notAllowedSpots.includes(selectedShip.shipLength - 1);
+      if (!checkAllowedPlace) {
+        for (let i = 0; i < draggedShipLength; i++) {
+          const index = parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10);
+          const newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
+          newCells.splice(index, 1, newCell);
+          selectedShip.shipPosition.push(index);
+        }
       }
-    }
+    } else return;
+
     setPlayerCells([...newCells]);
   };
 
