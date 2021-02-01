@@ -138,11 +138,18 @@ const App = () => {
   const dragDrop = (e) => {
     e.preventDefault();
     const notAllowedHorizontal = [
-                              0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 
-                              1, 11, 21, 31, 41, 51, 61, 71, 81, 91, 
-                              2, 12, 22, 32, 42, 52, 62, 72, 82, 92,
-                              3, 13, 23, 33, 43, 53, 63, 73, 83, 93
-                              ];                         
+      0, 10, 20, 30, 40, 50, 60, 70, 80, 90, 
+      1, 11, 21, 31, 41, 51, 61, 71, 81, 91, 
+      2, 12, 22, 32, 42, 52, 62, 72, 82, 92,
+      3, 13, 23, 33, 43, 53, 63, 73, 83, 93
+                              ];        
+    const notAllowedVertical = [
+      0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
+      10, 11, 12, 13, 14, 14, 16, 17, 18, 19, 
+      20, 21, 22, 23, 24, 25, 26, 27, 28, 29,
+      30, 31, 32, 33, 34, 35, 36, 37, 38, 39,
+      40, 41, 42, 43, 44, 45, 46, 47, 48, 49
+      ];
     let shipClass = selectedShip.shipName;
     let lastShipId = selectedShip.shipLength - 1;
     
@@ -160,9 +167,9 @@ const App = () => {
       }
   
     } else if (!selectedShip.isHorizontal) {
-      let lastShipIdPlacement = (parseInt(e.target.id) - selectedShipElement) + ((selectedShip.shipLength - 1) * 10);
-      console.log(lastShipIdPlacement)
-      let checkAllowedPlace = lastShipIdPlacement > 99 || lastShipIdPlacement < 10;
+      let lastShipIdPlacement = parseInt(e.target.id) - ((selectedShipElement - (selectedShip.shipLength - 1)) * 10);
+      let notAllowedSpots = notAllowedVertical.splice(0, 10 * lastShipId);
+      let checkAllowedPlace = lastShipIdPlacement > 99 || notAllowedSpots.includes(lastShipIdPlacement);
       if (!checkAllowedPlace) {
         for (let i = 0; i < draggedShipLength; i++) {
           let index = parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10);
