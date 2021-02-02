@@ -118,6 +118,8 @@ const App = () => {
 
   // Create Player Grid
 
+  let takenSpots = [];
+
   const createGrid = () => {
     let cell;
     let cells = [];
@@ -154,6 +156,7 @@ const App = () => {
     let lastShipId = selectedShip.shipLength - 1;
     
     if (selectedShip.isHorizontal) {
+      // Añadir array posiciones ship y comparar con takenSpots para permitir posicionar
       let lastShipIdPlacement = (parseInt(e.target.id) - selectedShipElement) + (selectedShip.shipLength - 1);
       let notAllowedSpots = notAllowedHorizontal.splice(0, 10 * lastShipId);
       let checkAllowedPlace = notAllowedSpots.includes(lastShipIdPlacement) || lastShipIdPlacement > 99;
@@ -162,11 +165,13 @@ const App = () => {
           let index = parseInt(e.target.id) - selectedShipElement + i;
           let newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
           newCells.splice(index, 1, newCell);
+          takenSpots.push(index);
           selectedShip.shipPosition.push(index);
         }
       }
   
     } else if (!selectedShip.isHorizontal) {
+      // Añadir array posiciones ship y comparar con takenSpots para permitir posicionar
       let lastShipIdPlacement = parseInt(e.target.id) - ((selectedShipElement - (selectedShip.shipLength - 1)) * 10);
       let notAllowedSpots = notAllowedVertical.splice(0, 10 * lastShipId);
       let checkAllowedPlace = lastShipIdPlacement > 99 || notAllowedSpots.includes(lastShipIdPlacement);
@@ -175,6 +180,7 @@ const App = () => {
           let index = parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10);
           let newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
           newCells.splice(index, 1, newCell);
+          takenSpots.push(index);
           selectedShip.shipPosition.push(index);
         }
       }
