@@ -5,6 +5,7 @@ import PlayerZone from './modules/PlayerZone';
 import InfoZone from './modules/InfoZone';
 import Footer from './modules/Footer';
 import gameboardFactory from './factories/gameboardFactory';
+import game from './game';
 
 const playerGameboard = gameboardFactory();
 const computerGameboard = gameboardFactory();
@@ -45,6 +46,35 @@ const deployNavy = (navy, ship, takenSpots) => {
 for (let ship of computerGameboard.shipsArray) {
   deployNavy(computerGameboard, ship, computerTakenSpots);
 }
+
+// Create Computer Grid 
+
+const computerCells = [];
+const createComputerGrid = (computerShipsPositions) => {
+
+  for(let i = 0; i < 100; i++) {
+    computerCells.push(<div key={i} id={i}></div>);
+  }
+
+  for (let ship of computerShipsPositions) {
+    for (let cell of ship.positions) {
+      computerCells[cell] = <div key={cell} id={cell} className={ship.ship}></div>;
+    }
+  }
+  return computerCells;
+};
+
+const computerFleet = computerGameboard.shipsArray;
+const computerShipsPositions = [];
+
+for (let ship of computerFleet) {
+  computerShipsPositions.push({
+    ship: ship.shipName, 
+    positions: ship.shipPosition
+  });
+}
+
+createComputerGrid(computerShipsPositions);
 
 // Place Player Zone Fleet
 
@@ -146,7 +176,7 @@ const App = () => {
       1, 11, 21, 31, 41, 51, 61, 71, 81, 91, 
       2, 12, 22, 32, 42, 52, 62, 72, 82, 92,
       3, 13, 23, 33, 43, 53, 63, 73, 83, 93
-                              ];        
+      ];        
     const notAllowedVertical = [
       0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 
       10, 11, 12, 13, 14, 14, 16, 17, 18, 19, 
@@ -199,16 +229,21 @@ const App = () => {
     setPlayerCells([...newCells]);
   };
 
+  // Game Loop
+
+  const initializeGame = () => game(playerGameboard, computerGameboard, playerCells, computerCells);
+
   return (
     <main className="App">
       <div className='playground'>
         <GridPlayer playerCells={playerCells} />   
-        <GridComputer computerGameboard={computerGameboard} />
+        <GridComputer computerCells={computerCells} />
       </div>
       <div className='info-container'>
         <PlayerZone 
           renderPlayerFleet={renderPlayerFleet}
-          shipAlreadyPlaced={shipAlreadyPlaced} />
+          shipAlreadyPlaced={shipAlreadyPlaced}
+          initializeGame={initializeGame} />
         <InfoZone />
       </div>
       <footer>
