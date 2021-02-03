@@ -90,6 +90,7 @@ let selectedShip;
 let selectedShipElement;
 let draggedShip;
 let draggedShipLength;
+let shipAlreadyPlaced = 0;
 
 
 const handleMouseDown = (e) => {
@@ -109,6 +110,7 @@ const dragPrevent = (e) => {
 };
 
 const dragEnd = (e) => {
+  shipAlreadyPlaced++;
   if (selectedShip.shipPosition.length !== 0) e.target.remove();
 };
 
@@ -156,10 +158,14 @@ const App = () => {
     let lastShipId = selectedShip.shipLength - 1;
     
     if (selectedShip.isHorizontal) {
-      // Añadir array posiciones ship y comparar con takenSpots para permitir posicionar
+      let shipPlaces = [];
+      for (let i = 0; i < draggedShipLength; i++) {
+        shipPlaces.push((parseInt(e.target.id) - selectedShipElement) + i);
+      }
+      let arePlacesTaken = shipPlaces.some(place => takenSpots.includes(place));
       let lastShipIdPlacement = (parseInt(e.target.id) - selectedShipElement) + (selectedShip.shipLength - 1);
       let notAllowedSpots = notAllowedHorizontal.splice(0, 10 * lastShipId);
-      let checkAllowedPlace = notAllowedSpots.includes(lastShipIdPlacement) || lastShipIdPlacement > 99;
+      let checkAllowedPlace = lastShipIdPlacement > 99 || notAllowedSpots.includes(lastShipIdPlacement) || arePlacesTaken;
       if (!checkAllowedPlace) {
         for (let i = 0; i < draggedShipLength; i++) {
           let index = parseInt(e.target.id) - selectedShipElement + i;
@@ -171,10 +177,14 @@ const App = () => {
       }
   
     } else if (!selectedShip.isHorizontal) {
-      // Añadir array posiciones ship y comparar con takenSpots para permitir posicionar
+      let shipPlaces = [];
+      for (let i = 0; i < draggedShipLength; i++) {
+        shipPlaces.push((parseInt(e.target.id) - (selectedShipElement * 10)) + (i * 10));
+      }
+      let arePlacesTaken = shipPlaces.some(place => takenSpots.includes(place));
       let lastShipIdPlacement = parseInt(e.target.id) - ((selectedShipElement - (selectedShip.shipLength - 1)) * 10);
       let notAllowedSpots = notAllowedVertical.splice(0, 10 * lastShipId);
-      let checkAllowedPlace = lastShipIdPlacement > 99 || notAllowedSpots.includes(lastShipIdPlacement);
+      let checkAllowedPlace = lastShipIdPlacement > 99 || notAllowedSpots.includes(lastShipIdPlacement) || arePlacesTaken;
       if (!checkAllowedPlace) {
         for (let i = 0; i < draggedShipLength; i++) {
           let index = parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10);
@@ -196,7 +206,9 @@ const App = () => {
         <GridComputer computerGameboard={computerGameboard} />
       </div>
       <div className='info-container'>
-        <PlayerZone renderPlayerFleet={renderPlayerFleet} />
+        <PlayerZone 
+          renderPlayerFleet={renderPlayerFleet}
+          shipAlreadyPlaced={shipAlreadyPlaced} />
         <InfoZone />
       </div>
       <footer>
