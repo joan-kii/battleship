@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
-import GridPlayer from './modules/GridPlayer';
-import GridComputer from './modules/GridComputer';
+import Game from './modules/Game';
 import PlayerZone from './modules/PlayerZone';
 import InfoZone from './modules/InfoZone';
 import Footer from './modules/Footer';
 import gameboardFactory from './factories/gameboardFactory';
-import game from './game';
 
 const playerGameboard = gameboardFactory();
 const computerGameboard = gameboardFactory();
@@ -46,6 +44,7 @@ const deployNavy = (navy, ship, takenSpots) => {
 for (let ship of computerGameboard.shipsArray) {
   deployNavy(computerGameboard, ship, computerTakenSpots);
 }
+
 
 // Create Computer Grid 
 
@@ -120,8 +119,6 @@ let selectedShip;
 let selectedShipElement;
 let draggedShip;
 let draggedShipLength;
-let shipAlreadyPlaced = 0;
-
 
 const handleMouseDown = (e) => {
   selectedShipElement = e.target.id;
@@ -140,7 +137,6 @@ const dragPrevent = (e) => {
 };
 
 const dragEnd = (e) => {
-  shipAlreadyPlaced++;
   if (selectedShip.shipPosition.length !== 0) e.target.remove();
 };
 
@@ -226,24 +222,32 @@ const App = () => {
       }
     } else return;
 
+    if (takenSpots.length === 17) setShipsAreadyPlaced(true);
+
     setPlayerCells([...newCells]);
   };
 
-  // Game Loop
+  // Start Game 
 
-  const initializeGame = () => game(playerGameboard, computerGameboard, playerCells, computerCells);
+  const [shipsAlreadyPlaced, setShipsAreadyPlaced] = useState(false);
+
+
+  const startGame = () => {
+    console.log('Go!!')
+  }; 
+
+  // Game Loop
 
   return (
     <main className="App">
-      <div className='playground'>
-        <GridPlayer playerCells={playerCells} />   
-        <GridComputer computerCells={computerCells} />
-      </div>
+      <Game 
+        playerCells={playerCells}
+        computerCells={computerCells} />
       <div className='info-container'>
         <PlayerZone 
           renderPlayerFleet={renderPlayerFleet}
-          shipAlreadyPlaced={shipAlreadyPlaced}
-          initializeGame={initializeGame} />
+          shipAlreadyPlaced={shipsAlreadyPlaced}
+          startGame={startGame} />
         <InfoZone />
       </div>
       <footer>

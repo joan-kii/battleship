@@ -1,6 +1,6 @@
 import React from 'react';
 
-const PlayerZone = ({ renderPlayerFleet, shipAlreadyPlaced, initializeGame }) => {
+const PlayerZone = ({ renderPlayerFleet, shipAlreadyPlaced, startGame }) => {
 
   const rotateMessage = <h3>Haz doble click para girar el barco.</h3>;
   const readyMessage = 
@@ -8,13 +8,13 @@ const PlayerZone = ({ renderPlayerFleet, shipAlreadyPlaced, initializeGame }) =>
     <h3>A Jugar!</h3>
     <button 
       className='button startGame'
-      onClick={initializeGame}>Comenzar</button>
+      onClick={startGame}>Comenzar</button>
     </div>;
 
   return (
     <div className='grid-playerZone'>
       { renderPlayerFleet } 
-      { shipAlreadyPlaced === 4 ? readyMessage : rotateMessage } 
+      { shipAlreadyPlaced ? readyMessage : rotateMessage } 
     </div>
   )
 };
