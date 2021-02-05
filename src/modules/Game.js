@@ -8,17 +8,23 @@ const computer = playerFactory(true);
 
 const Game = ({ playerCells, computerCells }) => {
 
+  const handleClick = (e) => {
+    console.log(e)
+  }
+
+  computerCells.forEach(cell => {
+    cell = React.cloneElement(cell, {onClick: (e) => handleClick(e)}, null);
+  })
+
+  console.log(computerCells)
+
   const [playerBoard, setPlayerBoard] = useState(playerCells);
   const [computerBoard, setComputerBoard] = useState(computerCells);
-  console.log(playerBoard)
-  console.log(computerBoard)
-  console.log(player)
-  console.log(computer)
   
   return (
     <div className='playground'>
-      <GridPlayer playerCells={playerCells} />
-      <GridComputer computerCells={computerCells} />
+      <GridPlayer playerCells={playerBoard} />
+      <GridComputer computerCells={computerBoard} />
     </div>
   );
 };

@@ -52,7 +52,7 @@ const computerCells = [];
 const createComputerGrid = (computerShipsPositions) => {
 
   for(let i = 0; i < 100; i++) {
-    computerCells.push(<div key={i} id={i}></div>);
+    computerCells.push(<div key={i} id={i} className='spot'></div>);
   }
 
   for (let ship of computerShipsPositions) {

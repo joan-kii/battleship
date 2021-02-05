@@ -4,7 +4,7 @@ const GridComputer = ({ computerCells }) => {
   
   return (
     <div className='grid grid-computer'>
-      { computerCells }  
+       { computerCells }
     </div>
   )
 };
