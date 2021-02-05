@@ -29,7 +29,13 @@ body {
   height: 40px;
 }
 
-/* Grid Player */
+.miss {
+  background-color: red;
+}
+
+.boom {
+  background-color: blue;
+}
 
 .grid-player {
   width: 400px;
@@ -47,6 +53,7 @@ body {
   flex-wrap: wrap;
   background-color: green;
   margin: auto;
+  cursor: pointer;
 }
 
 .grid-playerZone {

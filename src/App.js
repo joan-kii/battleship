@@ -155,6 +155,7 @@ const App = () => {
       cell = <div 
       key={i}
       id={i}
+      className={'spot'}
       onDragOver={(e) => dragPrevent(e)}
       onDrop={(e) => dragDrop(e)} ></div>
       cells.push(cell);
@@ -242,7 +243,9 @@ const App = () => {
     <main className="App">
       <Game 
         playerCells={playerCells}
-        computerCells={computerCells} />
+        computerCells={computerCells}
+        playerFleet={playerFleet}
+        computerFleet={computerFleet} />
       <div className='info-container'>
         <PlayerZone 
           renderPlayerFleet={renderPlayerFleet}
