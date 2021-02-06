@@ -56,6 +56,10 @@ body {
   cursor: pointer;
 }
 
+.grid-computer-none .grid-playerZone-none .grid-infoZone-none {
+  display: none;
+}
+
 .grid-playerZone {
   width: 400px;
   height: 400px;

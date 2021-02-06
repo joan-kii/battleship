@@ -1,9 +1,10 @@
 import React from 'react';
 
-const GridComputer = ({ computerCells }) => {
+const GridComputer = ({ computerCells, startGame }) => {
+  const gridComputerClass = startGame ? 'grid grid-computer' : 'grid-computer-none';
   
   return (
-    <div className='grid grid-computer'>
+    <div className={gridComputerClass}>
        { computerCells }
     </div>
   )

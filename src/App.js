@@ -231,11 +231,7 @@ const App = () => {
   // Start Game 
 
   const [shipsAlreadyPlaced, setShipsAreadyPlaced] = useState(false);
-
-
-  const startGame = () => {
-    console.log('Go!!')
-  }; 
+  const [startGame, setStartGame] = useState(false);
 
   // Game Loop
 
@@ -245,13 +241,14 @@ const App = () => {
         playerCells={playerCells}
         computerCells={computerCells}
         playerFleet={playerFleet}
-        computerFleet={computerFleet} />
+        computerFleet={computerFleet}
+        startGame={startGame} />
       <div className='info-container'>
-        <PlayerZone 
+        {!startGame && <PlayerZone 
           renderPlayerFleet={renderPlayerFleet}
           shipAlreadyPlaced={shipsAlreadyPlaced}
-          startGame={startGame} />
-        <InfoZone />
+          setStartGame={setStartGame} />}
+        {startGame && <InfoZone />}
       </div>
       <footer>
         <Footer />
