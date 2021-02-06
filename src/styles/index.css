@@ -34,7 +34,7 @@ body {
 }
 
 .boom {
-  background-color: blue;
+  background-color: green;
 }
 
 .grid-player {
@@ -51,7 +51,7 @@ body {
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: green;
+  background-color: orange;
   margin: auto;
   cursor: pointer;
 }

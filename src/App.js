@@ -239,8 +239,8 @@ const App = () => {
       <Game 
         playerCells={playerCells}
         computerCells={computerCells}
-        playerFleet={playerFleet}
-        computerFleet={computerFleet}
+        playerGameboard={playerGameboard}
+        computerGameboard={computerGameboard}
         startGame={startGame} />
       <div className='info-container'>
         {!startGame && <PlayerZone 
