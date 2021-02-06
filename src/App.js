@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import Game from './modules/Game';
 import PlayerZone from './modules/PlayerZone';
-import InfoZone from './modules/InfoZone';
 import Footer from './modules/Footer';
 import gameboardFactory from './factories/gameboardFactory';
 
@@ -248,7 +247,7 @@ const App = () => {
           renderPlayerFleet={renderPlayerFleet}
           shipAlreadyPlaced={shipsAlreadyPlaced}
           setStartGame={setStartGame} />}
-        {startGame && <InfoZone />}
+        
       </div>
       <footer>
         <Footer />
