@@ -247,7 +247,6 @@ const App = () => {
           renderPlayerFleet={renderPlayerFleet}
           shipAlreadyPlaced={shipsAlreadyPlaced}
           setStartGame={setStartGame} />}
-        
       </div>
       <footer>
         <Footer />

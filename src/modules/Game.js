@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import GridPlayer from './GridPlayer';
 import GridComputer from './GridComputer';
 import playerFactory from '../factories/playerFactory';
@@ -8,37 +8,30 @@ const player = playerFactory(false);
 const computer = playerFactory(true);
 
 const Game = ({ playerCells, computerCells, playerGameboard, computerGameboard, startGame }) => {
-  /* console.log('player', playerGameboard)
-  console.log('computer', computerGameboard) */
 
   // Toggle Cells Classes
 
   const handleClick = (cell) => {
-    console.log('handleClick', isGameOver)
 
-    if (playerTurn) {
+    if (playerTurnRef.current && !isGameOverRef.current) {
       player.shoot(parseInt(cell.key));
       computerGameboard.receiveAttack(parseInt(cell.key));
       if (cell.props.className === 'spot') {
         let missCell = React.cloneElement(cell, {className: 'miss'}, null);
-        computerBoard.splice(cell.key, 1, missCell);
+        computerBoard.splice(parseInt(cell.key), 1, missCell);
         setComputerBoard([...computerBoard]);
-      } else {
+      }  else {
         let boomCell = React.cloneElement(cell, {className: 'boom'}, null);
-        computerBoard.splice(cell.key, 1, boomCell);
+        computerBoard.splice(parseInt(cell.key), 1, boomCell);
         setComputerBoard([...computerBoard]);
       }
+      checkWinner();
       setPlayerTurn(false);
     }
-    setIsGameOver(computerGameboard.checkSunkenShips());
   };
 
-  const clickableComputerCells = computerCells.map(cell => {
-    return React.cloneElement(cell, {onClick: () => handleClick(cell)}, null);
-  });
-
   const updatePlayerGrid = (cell) => {
-    console.log('updatePlayer', isGameOver)
+
     playerGameboard.receiveAttack(cell);
     if (playerBoard[cell].props.className === 'spot') {
       let missCell = React.cloneElement(playerBoard[cell], {className: 'miss'}, null);
@@ -49,24 +42,45 @@ const Game = ({ playerCells, computerCells, playerGameboard, computerGameboard, 
       playerBoard.splice(playerBoard[cell].key, 1, boomCell);
       setPlayerBoard([...playerBoard]);
     }
-    setIsGameOver(playerGameboard.checkSunkenShips());
+    checkWinner();
     setPlayerTurn(true);
   };
+  
+  const clickableComputerCells = computerCells.map(cell => {
+    return React.cloneElement(cell, {onClick: () => handleClick(cell)}, null);
+  });
 
   // Game Loop
   
   useEffect(() => setPlayerBoard(playerCells), [playerCells]);
+
   const [isGameOver, setIsGameOver] = useState(false);
+  const isGameOverRef = useRef();
+  isGameOverRef.current = isGameOver;
+
+  const [playerTurn, setPlayerTurn] = useState(true);
+  const playerTurnRef = useRef();
+  playerTurnRef.current = playerTurn;
+
+  const [winner, setWinner] = useState('');
+
+  const checkWinner = () => {
+    const computerLoose = computerGameboard.checkSunkenShips();
+    const playerLoose = playerGameboard.checkSunkenShips();
+    if (computerLoose || playerLoose) setIsGameOver(true);
+    if (computerLoose) setWinner(player.name);
+    if (playerLoose) setWinner(computer.name);
+  };
+
   const [playerBoard, setPlayerBoard] = useState(playerCells);
   const [computerBoard, setComputerBoard] = useState(clickableComputerCells);
-  const [playerTurn, setPlayerTurn] = useState(true);
-  
+
   useEffect(() => {
     if (!playerTurn && !isGameOver) {
       computer.shoot();
       const timer = setTimeout(() => {
         updatePlayerGrid(computer.spotsShooted[computer.spotsShooted.length - 1]);
-      }, 1000);
+      }, 600);
       return () => clearTimeout(timer);
     }
   });
@@ -81,7 +95,10 @@ const Game = ({ playerCells, computerCells, playerGameboard, computerGameboard, 
           computerCells={computerBoard}
           startGame={startGame} />
       </div>
-      {startGame && <InfoZone playerTurn={playerTurn} />}
+      {startGame && 
+        <InfoZone 
+          playerTurn={playerTurn}
+          winner={winner} />}
     </div>
   );
 };

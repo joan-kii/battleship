@@ -1,11 +1,20 @@
 import React from 'react';
 
-const InfoZone = ({ playerTurn }) => {
+const InfoZone = ({ playerTurn, winner }) => {
+
+  const messageWinner = winner === 'Ordenador' ? 
+    'Has sido derrotado...' : '¡¡¡Victoria!!!';
+
   const message = playerTurn ? '¡Al ataque!' : '¡Cuidado!';
+
   return (
     <div className={'grid-infoZone'}> 
-      <h3 className='turnDisplay'>{message}</h3>
-      <p className='messages'></p>
+      {winner && 
+        <div className='winner'>
+          <h3 className='turnDisplay'>{messageWinner}</h3>
+          <button>Volver a jugar</button>
+        </div>}
+      {!winner && <p className='messages'>{message}</p>}
     </div>
   )
 };
