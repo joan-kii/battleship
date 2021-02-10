@@ -12,7 +12,8 @@ const InfoZone = ({ playerTurn, winner }) => {
       {winner && 
         <div className='winner'>
           <h3 className='turnDisplay'>{messageWinner}</h3>
-          <button>Volver a jugar</button>
+          <button className='replayButton'
+            onClick={() => window.location.reload()}>Volver a jugar</button>
         </div>}
       {!winner && <p className='messages'>{message}</p>}
     </div>
