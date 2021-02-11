@@ -88,7 +88,8 @@ const Game = ({ playerCells, computerCells, playerGameboard, computerGameboard, 
   // Render
 
   return (
-    <div>
+    <div className='game'>
+      <h2 className='gameTitle'>Hundir la Flota</h2>
       <div className='playground'>
         <GridPlayer playerCells={playerBoard} />
         <GridComputer 

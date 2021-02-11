@@ -1,8 +1,20 @@
 body {
   margin: 0;
-  font-family: 'Bowlby One SC', cursive;
-  font-family: 'Roboto Mono', monospace;
   background-color: #f3f3f3;
+}
+
+*, *::before, *::after {
+  font-family: 'Roboto Mono', monospace;
+  box-sizing: border-box;
+}
+
+button {
+  color: #f3f3f3;
+  background-color:  #e63946;
+  font-size: 1rem;
+  border-radius: 10px;
+  cursor: pointer;
+  padding: 0.5rem 1rem;
 }
 
 .App {
@@ -10,11 +22,29 @@ body {
   flex-direction: column;
 }
 
+.game {
+  display: flex;
+  flex-direction: column;
+}
+
+.gameTitle {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  font-family: 'Bowlby One SC', cursive;
+  font-size: 4rem;
+  color: #e63946;
+}
+
 .playground {
   display: flex;
+  justify-content: center;
+  align-items: center;
   width: 100%;
   padding-top: 30px;
 }
+
 
 .info-container {
   display: flex;
@@ -35,6 +65,16 @@ body {
 
 .boom {
   background-color: green;
+}
+
+.playerPlace .computerPlace {
+  display: flex;
+  flex-direction: column;
+  margin: auto;
+}
+
+.placeName {
+  margin: auto;
 }
 
 .grid-player {
