@@ -12,10 +12,10 @@ const PlayerZone = ({ renderPlayerFleet, shipAlreadyPlaced, setStartGame }) => {
 
   return (
     <div className='grid-playerZone'>
-      <div>
+      { shipAlreadyPlaced ? readyMessage : rotateMessage } 
+      <div className='fleet'>
         { renderPlayerFleet } 
       </div>
-      { shipAlreadyPlaced ? readyMessage : rotateMessage } 
     </div>
   )
 };

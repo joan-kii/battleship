@@ -1,10 +1,12 @@
 import React from 'react';
 
-const GridPlayer = ({ playerCells }) => {
+const GridPlayer = ({ playerCells, startGame }) => {
+
+  const playerGridTitle = startGame ? 'Tu Flota': 'Posiciona tus Barcos';
   return (
     <div className='playerPlace'>
-      <h2 className='placeName'>Tu Flota</h2>
-      <div className='grid grid-player' >
+      <h2 className='placeName'>{playerGridTitle}</h2>
+      <div className='grid' >
         {playerCells}
       </div>
     </div>

@@ -91,7 +91,9 @@ const Game = ({ playerCells, computerCells, playerGameboard, computerGameboard, 
     <div className='game'>
       <h2 className='gameTitle'>Hundir la Flota</h2>
       <div className='playground'>
-        <GridPlayer playerCells={playerBoard} />
+        <GridPlayer 
+          playerCells={playerBoard}
+          startGame={startGame} />
         <GridComputer 
           computerCells={computerBoard}
           startGame={startGame} />

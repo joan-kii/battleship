@@ -195,7 +195,7 @@ const App = () => {
       if (!checkAllowedPlace) {
         for (let i = 0; i < draggedShipLength; i++) {
           let index = parseInt(e.target.id) - selectedShipElement + i;
-          let newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
+          let newCell = React.cloneElement(playerCells[index], {className: 'taken'}, null);
           newCells.splice(index, 1, newCell);
           takenSpots.push(index);
           selectedShip.shipPosition.push(index);
@@ -214,7 +214,7 @@ const App = () => {
       if (!checkAllowedPlace) {
         for (let i = 0; i < draggedShipLength; i++) {
           let index = parseInt(e.target.id) - (selectedShipElement * 10) + (i * 10);
-          let newCell = React.cloneElement(playerCells[index], {className: shipClass}, null);
+          let newCell = React.cloneElement(playerCells[index], {className: 'taken'}, null);
           newCells.splice(index, 1, newCell);
           takenSpots.push(index);
           selectedShip.shipPosition.push(index);
@@ -223,7 +223,6 @@ const App = () => {
     } else return;
 
     if (takenSpots.length === 17) setShipsAreadyPlaced(true);
-
     setPlayerCells([...newCells]);
   };
 

@@ -1,6 +1,14 @@
+html {
+  scrollbar-width: none;
+}
+
 body {
   margin: 0;
   background-color: #f3f3f3;
+}
+
+body::-webkit-scrollbar {
+  display: none;
 }
 
 *, *::before, *::after {
@@ -11,10 +19,10 @@ body {
 button {
   color: #f3f3f3;
   background-color:  #e63946;
-  font-size: 1rem;
-  border-radius: 5px;
+  font-size: 1.3rem;
+  border-radius: .2em;
   cursor: pointer;
-  padding: 0.5rem 1rem;
+  padding: .7rem 1.5rem;
   margin: 5vh auto;
   border: none;
   outline: none;
@@ -30,12 +38,7 @@ h3 {
   align-items: center;
 }
 
-.App {
-  display: flex;
-  flex-direction: column;
-}
-
-.game {
+.App .game {
   display: flex;
   flex-direction: column;
 }
@@ -57,7 +60,6 @@ h3 {
   width: 100%;
 }
 
-
 .info-container {
   display: flex;
   width: 100%;
@@ -69,6 +71,7 @@ h3 {
 .grid div {
   width: 40px;
   height: 40px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
 }
 
 .miss {
@@ -90,34 +93,33 @@ h3 {
   text-align: center;
 }
 
-.grid-player {
+.grid {
   width: 400px;
   height: 400px;
   display: flex;
   flex-wrap: wrap;
-  background-color: blue;
+  background-color: #00AAFF;
   margin: auto;
   border-radius: 5px;
 }
 
 .grid-computer {
-  width: 400px;
-  height: 400px;
-  display: flex;
-  flex-wrap: wrap;
-  background-color: orange;
-  margin: auto;
-  border-radius: 3px;
   cursor: pointer;
+  margin-left: 5vmin;
 }
 
 .grid-playerZone {
   display: flex;
-  width: 400px;
+  flex-direction: column;
+  width: 800px;
   height: 250px;
   margin: auto;
 }
 
+.fleet {
+  display: flex;
+  justify-content: space-around;
+}
 .rotateMessage {
   text-align: center;
   align-items: flex-start;
@@ -161,21 +163,13 @@ h3 {
   height: 80px;
 }
 
-.Crucero-container {
-  width: 120px;
-  height: 40px;
-}
-
-.Crucero-container-vertical {
-  width: 40px;
-  height: 120px;
-}
-
+.Crucero-container,
 .Submarino-container {
   width: 120px;
   height: 40px;
 }
 
+.Crucero-container-vertical,
 .Submarino-container-vertical {
   width: 40px;
   height: 120px;
@@ -200,22 +194,6 @@ h3 {
   height: 200px;
 }
 
-.Destructor {
-  background-color: grey;
-}
-
-.Crucero {
-  background-color: grey;
-}
-
-.Submarino {
-  background-color: grey;
-}
-
-.Acorazado {
-  background-color: grey;
-}
-
-.Portaviones {
+.taken {
   background-color: grey;
 }
