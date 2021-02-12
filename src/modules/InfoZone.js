@@ -8,7 +8,7 @@ const InfoZone = ({ playerTurn, winner }) => {
   const message = playerTurn ? '¡Al ataque!' : '¡Cuidado!';
 
   return (
-    <div className={'grid-infoZone'}> 
+    <div className='grid-infoZone'> 
       {winner && 
         <div className='winner'>
           <h3 className='turnDisplay'>{messageWinner}</h3>
