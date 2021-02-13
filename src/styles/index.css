@@ -38,6 +38,19 @@ h3 {
   align-items: center;
 }
 
+a {
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 1.3rem;
+  color: black;
+  border: none;
+  outline: none;
+}
+
+a:hover {
+  color:  #e63946;
+}
+
 .App .game {
   display: flex;
   flex-direction: column;
@@ -241,4 +254,14 @@ h3 {
 
 .taken {
   background-color: #CCCCCC;
+}
+
+/* Footer */
+
+.footer {
+  display: flex;
+  width: 100%;
+  justify-content: space-around;
+  position: fixed;
+  bottom: 0;
 }

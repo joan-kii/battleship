@@ -44,7 +44,6 @@ for (let ship of computerGameboard.shipsArray) {
   deployNavy(computerGameboard, ship, computerTakenSpots);
 }
 
-
 // Create Computer Grid 
 
 const computerCells = [];

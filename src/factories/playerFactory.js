@@ -8,7 +8,6 @@ const playerFactory = (isComputer) => {
   
   const shoot = (playerTarget) => {
     if(isComputer) {
-
       let availableSpot = true;
       while(availableSpot) {
         let computerTarget = getRandomNumber(100);
@@ -19,7 +18,6 @@ const playerFactory = (isComputer) => {
       } 
 
     } else {
-
       if(!spotsShooted.includes(playerTarget)) {
         spotsShooted.push(playerTarget);
       } else {
