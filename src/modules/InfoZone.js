@@ -5,7 +5,11 @@ const InfoZone = ({ playerTurn, winner }) => {
   const messageWinner = winner === 'Ordenador' ? 
     'Has sido derrotado...' : '¡¡¡Victoria!!!';
 
-  const message = playerTurn ? '¡Al ataque!' : '¡Cuidado!';
+  const playerMessages = ['¡Vamos!', '¡Al ataque!', '¡Sí!', '¡Dispara!', 'Tu turno', '¡A por ellos!'];
+  const computerMessages = ['¡Atención!', '¡Te atacan!', '¡Cuidado!', '¡Oh, no!', '¡Resiste!', '¡No te rindas!'];
+
+  const message = playerTurn ? playerMessages[Math.floor(Math.random() * playerMessages.length)] : 
+    computerMessages[Math.floor(Math.random() * computerMessages.length)];
 
   return (
     <div className='grid-infoZone'> 
