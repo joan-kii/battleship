@@ -1,3 +1,8 @@
-Juego 'Hundir la Flota' como práctica en The Odin Project.
+## [Live Demo](https://joan-kii.github.io/battleship/)
 
-Puedes echarle un vistazo [aquí](https://joan-kii.github.io/battleship/).
+## Overview
+This is an exercise for The Odin Project's JavaScript path emulating the Battleship game.
+
+## Dependencies
+  - React
+  - Jest
